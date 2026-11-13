@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "vx47_assault"
+display_name = "VX-47 Vanguard"
+category = 0
+category_label = "Assault Rifle"
+fire_mode = 2
+burst_count = 3
+damage = 28.0
+fire_rate = 9.5
+magazine_size = 30
+reserve_max = 150
+reload_duration = 1.75
+spread_hip = 0.032
+spread_ads = 0.007
+recoil_pitch = 1.65
+recoil_yaw = 0.55
+ads_fov = 55.0
+ads_sensitivity_mult = 0.62
+pellets = 1
+effective_range = 120.0
+is_energy = false
+is_explosive = false
+splash_radius = 0.0
+move_speed_mult = 1.0
+accent_color = Color(0.95, 0.65, 0.15, 1)
+body_color = Color(0.18, 0.21, 0.26, 1)
+barrel_length = 0.54
+receiver_length = 0.44
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_assault.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "AR"

@@ -1,0 +1,260 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_pctrl"]
+[ext_resource type="Script" path="res://scripts/player/weapon_rig.gd" id="2_wrig"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.38
+height = 1.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_receiver"]
+size = Vector3(0.065, 0.09, 0.44)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_barrel"]
+top_radius = 0.016
+bottom_radius = 0.018
+height = 0.54
+
+[sub_resource type="BoxMesh" id="BoxMesh_accent"]
+size = Vector3(0.072, 0.018, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mag"]
+size = Vector3(0.042, 0.14, 0.075)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muzzle"]
+shading_mode = 0
+albedo_color = Color(1, 0.85, 0.38, 1)
+billboard_mode = 3
+
+[sub_resource type="QuadMesh" id="QuadMesh_muzzle"]
+material = SubResource("StandardMaterial3D_muzzle")
+size = Vector2(0.09, 0.09)
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.006, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fire"]
+resource_name = "fire"
+length = 0.14
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.14),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.012, 0.065), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ModelRoot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.14),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.08, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_reload"]
+resource_name = "reload"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 1.25, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.35, 0.15, 0.25), Vector3(-0.35, 0.15, 0.25), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ModelRoot/ProceduralGun/Magazine:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.85, 1.25, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.09, 0.02), Vector3(0, -0.26, 0.04), Vector3(0, -0.28, 0.04), Vector3(0, -0.09, 0.02), Vector3(0, -0.09, 0.02)]
+}
+
+[sub_resource type="Animation" id="Animation_equip"]
+resource_name = "equip"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(0.4, 1),
+"update": 0,
+"values": [Vector3(0, -0.22, 0.1), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ModelRoot:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(0.4, 1),
+"update": 0,
+"values": [Vector3(-0.45, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_inspect"]
+resource_name = "inspect"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.3, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.15, 0.65, -0.35), Vector3(0.12, -0.45, 0.25), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_empty"]
+resource_name = "empty"
+length = 0.16
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ModelRoot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.16),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.015, 0.015), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_weapon"]
+_data = {
+"empty": SubResource("Animation_empty"),
+"equip": SubResource("Animation_equip"),
+"fire": SubResource("Animation_fire"),
+"idle": SubResource("Animation_idle"),
+"inspect": SubResource("Animation_inspect"),
+"reload": SubResource("Animation_reload")
+}
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_pctrl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="CeilingCheck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+target_position = Vector3(0, 0.95, 0)
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 75.0
+near = 0.05
+far = 120.0
+
+[node name="InteractRay" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -3.2)
+collision_mask = 16
+
+[node name="ShootRay" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -140.0)
+collision_mask = 5
+
+[node name="WeaponRig" type="Node3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24, -0.22, -0.44)
+script = ExtResource("2_wrig")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3D/WeaponRig"]
+libraries = {
+"": SubResource("AnimationLibrary_weapon")
+}
+autoplay = "idle"
+
+[node name="ModelRoot" type="Node3D" parent="Head/Camera3D/WeaponRig"]
+
+[node name="ProceduralGun" type="Node3D" parent="Head/Camera3D/WeaponRig/ModelRoot"]
+
+[node name="Receiver" type="MeshInstance3D" parent="Head/Camera3D/WeaponRig/ModelRoot/ProceduralGun"]
+mesh = SubResource("BoxMesh_receiver")
+
+[node name="Barrel" type="MeshInstance3D" parent="Head/Camera3D/WeaponRig/ModelRoot/ProceduralGun"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.015, -0.42)
+mesh = SubResource("CylinderMesh_barrel")
+
+[node name="AccentStrip" type="MeshInstance3D" parent="Head/Camera3D/WeaponRig/ModelRoot/ProceduralGun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.048, -0.02)
+mesh = SubResource("BoxMesh_accent")
+
+[node name="Magazine" type="MeshInstance3D" parent="Head/Camera3D/WeaponRig/ModelRoot/ProceduralGun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09, 0.02)
+mesh = SubResource("BoxMesh_mag")
+
+[node name="CustomModelAnchor" type="Node3D" parent="Head/Camera3D/WeaponRig/ModelRoot"]
+
+[node name="MuzzlePoint" type="Marker3D" parent="Head/Camera3D/WeaponRig/ModelRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, -0.72)
+
+[node name="MuzzleLight" type="OmniLight3D" parent="Head/Camera3D/WeaponRig/ModelRoot/MuzzlePoint"]
+light_color = Color(1, 0.72, 0.25, 1)
+light_energy = 0.0
+omni_range = 4.0
+
+[node name="MuzzleParticles" type="CPUParticles3D" parent="Head/Camera3D/WeaponRig/ModelRoot/MuzzlePoint"]
+emitting = false
+amount = 6
+lifetime = 0.08
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+mesh = SubResource("QuadMesh_muzzle")
+direction = Vector3(0, 0, -1)
+spread = 22.0
+initial_velocity_min = 1.2
+initial_velocity_max = 2.8
+gravity = Vector3(0, 0, 0)

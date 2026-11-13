@@ -1,0 +1,111 @@
+name: Build Android APK (Godot 4.3)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.3"
+  GODOT_RELEASE_STATUS: "stable"
+  PROJECT_DIR: "godot_project"
+  EXPORT_NAME: "Android"
+  APK_OUTPUT: "godot_project/build/tactical_strike_zero_hour.apk"
+
+jobs:
+  build-android-apk:
+    name: Export Android ARM64 APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Set Up Java 17 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: 3. Set Up Android SDK & Build Tools
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android Platform 34 and Build Tools
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+
+      - name: 4. Download Godot Engine 4.3 & Exact Export Templates
+        run: |
+          GODOT_TAG="${GODOT_VERSION}-${GODOT_RELEASE_STATUS}"
+          BASE_URL="https://github.com/godotengine/godot/releases/download/${GODOT_TAG}"
+          mkdir -p "$HOME/.local/bin" "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE_STATUS}"
+
+          wget -q --show-progress "${BASE_URL}/Godot_v${GODOT_TAG}_linux.x86_64.zip" -O /tmp/godot.zip
+          unzip -q /tmp/godot.zip -d /tmp/godot_bin
+          mv /tmp/godot_bin/Godot_v${GODOT_TAG}_linux.x86_64 "$HOME/.local/bin/godot"
+          chmod +x "$HOME/.local/bin/godot"
+
+          wget -q --show-progress "${BASE_URL}/Godot_v${GODOT_TAG}_export_templates.tpz" -O /tmp/templates.tpz
+          unzip -q /tmp/templates.tpz -d /tmp/templates_extract
+          mv /tmp/templates_extract/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE_STATUS}/"
+          rm -rf /tmp/godot.zip /tmp/godot_bin /tmp/templates.tpz /tmp/templates_extract
+
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: 5. Configure Android Debug Keystore & Godot Editor Settings
+        run: |
+          mkdir -p "$HOME/.android" "$HOME/.config/godot" "${PROJECT_DIR}/build"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -v \
+              -keystore "$HOME/.android/debug.keystore" \
+              -storepass android \
+              -alias androiddebugkey \
+              -keypass android \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -dname "CN=TacticalStrike,O=ZeroHour,C=US"
+          fi
+
+          cat <<EOF > "$HOME/.config/godot/editor_settings-${GODOT_VERSION}.tres"
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "${ANDROID_HOME}"
+          export/android/debug_keystore = "$HOME/.android/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          EOF
+
+      - name: 6. Import Godot Project Resources
+        run: |
+          godot --headless --path "${PROJECT_DIR}" --import --quit
+
+      - name: 7. Validate Project & Check Script Errors
+        run: |
+          set -o pipefail
+          godot --headless --path "${PROJECT_DIR}" --quit --verbose 2>&1 | tee /tmp/godot_check.log
+          if grep -E "SCRIPT ERROR|Parse Error|Failed loading resource|Cannot open file" /tmp/godot_check.log; then
+            echo "Project validation detected script or resource errors!"
+            exit 1
+          fi
+
+      - name: 8. Export Android APK (ARM64)
+        run: |
+          godot --headless --path "${PROJECT_DIR}" --export-debug "${EXPORT_NAME}" "build/tactical_strike_zero_hour.apk"
+
+      - name: 9. Verify APK Output
+        run: |
+          ls -lh "${APK_OUTPUT}"
+          test -s "${APK_OUTPUT}"
+          echo "Verified APK build at ${APK_OUTPUT}"
+
+      - name: 10. Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tactical-strike-zero-hour-android-apk
+          path: ${{ env.APK_OUTPUT }}
+          retention-days: 30

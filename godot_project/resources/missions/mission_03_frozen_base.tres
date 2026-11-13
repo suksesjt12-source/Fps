@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/mission_data.gd" id="1_mdata"]
+
+[resource]
+script = ExtResource("1_mdata")
+mission_id = "mission_03"
+mission_index = 2
+title = "Operation Frostbite"
+location_name = "Frozen Research Base"
+environment_theme = "frozen"
+map_scene_path = "res://scenes/environments/map_frozen_base.tscn"
+briefing = "An arctic research station is under siege. Protect our field specialist inside the cryo lab, restore auxiliary reactor power, and reach the helipad beacon."
+primary_objective_ids = PackedStringArray("obj_frozen_protect", "obj_frozen_reactor", "obj_frozen_extract")
+primary_objective_labels = PackedStringArray("Escort & Protect Research Specialist", "Restore Auxiliary Cryo Reactor", "Reach Arctic Helipad Extraction")
+secondary_objective_ids = PackedStringArray("obj_frozen_sample")
+secondary_objective_labels = PackedStringArray("Collect Cryo Containment Sample")
+reward_credits = 1800
+time_limit_sec = 0.0

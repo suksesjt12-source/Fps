@@ -1,0 +1,259 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/level_controller.gd" id="1_lvl"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_soldier.tscn" id="2_enemy"]
+[ext_resource type="Resource" path="res://resources/enemies/commander.tres" id="3_cmd"]
+[ext_resource type="Script" path="res://scripts/missions/objective_zone.gd" id="4_ozone"]
+[ext_resource type="Script" path="res://scripts/missions/objective_terminal.gd" id="5_oterm"]
+[ext_resource type="Script" path="res://scripts/missions/checkpoint_zone.gd" id="6_ckpt"]
+[ext_resource type="Script" path="res://scripts/missions/pickup_item.gd" id="7_pick"]
+
+[sub_resource type="Environment" id="Environment_desert"]
+background_mode = 1
+background_color = Color(0.68, 0.56, 0.42, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.86, 0.72, 0.54, 1)
+ambient_light_energy = 0.75
+fog_enabled = true
+fog_light_color = Color(0.76, 0.63, 0.48, 1)
+fog_density = 0.012
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_desert"]
+agent_radius = 0.5
+agent_height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sand"]
+albedo_color = Color(0.64, 0.52, 0.36, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_steel"]
+albedo_color = Color(0.36, 0.34, 0.32, 1)
+metallic = 0.45
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dust"]
+shading_mode = 0
+albedo_color = Color(0.84, 0.72, 0.55, 0.45)
+transparency = 1
+billboard_mode = 3
+
+[sub_resource type="QuadMesh" id="QuadMesh_dust"]
+material = SubResource("StandardMaterial3D_dust")
+size = Vector2(0.35, 0.35)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zone"]
+size = Vector3(7, 3, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_term"]
+size = Vector3(1.2, 1.8, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_term"]
+size = Vector3(0.9, 1.4, 0.7)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pick"]
+radius = 1.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_pick"]
+size = Vector3(0.55, 0.35, 0.35)
+
+[node name="MapDesertFacility" type="Node3D"]
+script = ExtResource("1_lvl")
+environment_theme = "desert"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_desert")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.766044, -0.492404, 0.413176, 0, 0.642788, 0.766044, -0.642788, -0.586824, 0.492404, 0, 28, 0)
+light_color = Color(1, 0.9, 0.72, 1)
+light_energy = 1.6
+shadow_enabled = true
+
+[node name="DustParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+amount = 48
+lifetime = 4.0
+mesh = SubResource("QuadMesh_dust")
+emission_shape = 3
+emission_box_extents = Vector3(32, 3, 32)
+direction = Vector3(1, -0.1, 0.3)
+spread = 18.0
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, 0, 0)
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 30)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_desert")
+
+[node name="DesertFloor" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(80, 1, 80)
+material = SubResource("StandardMaterial3D_sand")
+
+[node name="PerimeterWallN" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, -40)
+use_collision = true
+size = Vector3(82, 7, 2)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="PerimeterWallS" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 40)
+use_collision = true
+size = Vector3(82, 7, 2)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="PerimeterWallW" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 3.5, 0)
+use_collision = true
+size = Vector3(2, 7, 80)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="PerimeterWallE" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 3.5, 0)
+use_collision = true
+size = Vector3(2, 7, 80)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="SolarReactorSilo" type="CSGCylinder3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4.5, -4)
+use_collision = true
+radius = 6.0
+height = 9.0
+sides = 12
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="IndustrialDepot" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.5, -10)
+use_collision = true
+size = Vector3(14, 7, 18)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="CoverBlockA" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 12)
+use_collision = true
+size = Vector3(6, 1.6, 1.4)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="CoverBlockB" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.8, -14)
+use_collision = true
+size = Vector3(5, 1.6, 1.4)
+material = SubResource("StandardMaterial3D_steel")
+
+[node name="CoverPoint1" type="Marker3D" parent="." groups=["cover_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 10)
+
+[node name="CoverPoint2" type="Marker3D" parent="." groups=["cover_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.2, -16)
+
+[node name="EnemySpawnA" type="Marker3D" parent="." groups=["enemy_spawns"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.2, 8)
+
+[node name="EnemySpawnB" type="Marker3D" parent="." groups=["enemy_spawns"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.2, -24)
+
+[node name="PatrolA" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.2, 6)
+
+[node name="PatrolB" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.2, 6)
+
+[node name="Enemy1" parent="." instance=ExtResource("2_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 6)
+patrol_points = Array[NodePath]([NodePath("../PatrolA"), NodePath("../PatrolB")])
+
+[node name="Enemy2" parent="." instance=ExtResource("2_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.2, -10)
+
+[node name="CommanderTarget" parent="." instance=ExtResource("2_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.2, -26)
+enemy_data = ExtResource("3_cmd")
+is_objective_target = true
+objective_id_on_defeat = "obj_desert_commander"
+
+[node name="CheckpointCenter" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_ckpt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CheckpointCenter"]
+shape = SubResource("BoxShape3D_zone")
+
+[node name="ObjInfiltrateDepot" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 16)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("4_ozone")
+objective_id = "obj_desert_depot"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ObjInfiltrateDepot"]
+shape = SubResource("BoxShape3D_zone")
+
+[node name="ObjCoolingValve" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.8, -4)
+collision_layer = 17
+script = ExtResource("5_oterm")
+objective_id = "obj_desert_valve"
+prompt_text = "[USE] Activate Cooling Override"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ObjCoolingValve"]
+shape = SubResource("BoxShape3D_term")
+
+[node name="Indicator" type="MeshInstance3D" parent="ObjCoolingValve"]
+mesh = SubResource("BoxMesh_term")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ObjCoolingValve"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+omni_range = 5.0
+
+[node name="ObjTelemetryIntel" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.8, -14)
+collision_layer = 17
+script = ExtResource("5_oterm")
+objective_id = "obj_desert_intel"
+prompt_text = "[USE] Recover Telemetry Drive"
+is_collectible = true
+beacon_color = Color(0.95, 0.65, 0.15, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ObjTelemetryIntel"]
+shape = SubResource("BoxShape3D_term")
+
+[node name="Indicator" type="MeshInstance3D" parent="ObjTelemetryIntel"]
+mesh = SubResource("BoxMesh_term")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ObjTelemetryIntel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+omni_range = 5.0
+
+[node name="PickupDMR" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.8, 22)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("7_pick")
+pickup_type = 0
+weapon_id = "sr8_precision"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupDMR"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickupDMR"]
+mesh = SubResource("BoxMesh_pick")
+
+[node name="PickupAmmo" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.8, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("7_pick")
+pickup_type = 1
+respawn_time = 20.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupAmmo"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PickupAmmo"]
+mesh = SubResource("BoxMesh_pick")

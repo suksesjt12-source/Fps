@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+archetype_id = "enforcer"
+display_name = "Heavy Enforcer"
+max_health = 210.0
+move_speed = 2.4
+chase_speed = 3.6
+attack_damage = 16.0
+fire_interval = 0.35
+burst_shots = 4
+detection_range = 30.0
+hearing_range = 24.0
+attack_range = 18.0
+accuracy_spread = 0.055
+score_value = 250
+armor_color = Color(0.32, 0.24, 0.2, 1)
+visor_color = Color(1.0, 0.55, 0.12, 1)
+body_scale = 1.15
+custom_glb_path = ""

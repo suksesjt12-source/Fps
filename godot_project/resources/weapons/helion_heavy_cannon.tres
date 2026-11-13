@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "helion_heavy"
+display_name = "HELION-X Plasma Cannon"
+category = 6
+category_label = "Heavy Energy Weapon"
+fire_mode = 0
+burst_count = 1
+damage = 115.0
+fire_rate = 1.05
+magazine_size = 5
+reserve_max = 20
+reload_duration = 2.6
+spread_hip = 0.015
+spread_ads = 0.004
+recoil_pitch = 5.2
+recoil_yaw = 0.8
+ads_fov = 54.0
+ads_sensitivity_mult = 0.6
+pellets = 1
+effective_range = 110.0
+is_energy = true
+is_explosive = true
+splash_radius = 4.2
+move_speed_mult = 0.88
+accent_color = Color(1.0, 0.52, 0.12, 1)
+body_color = Color(0.24, 0.22, 0.26, 1)
+barrel_length = 0.68
+receiver_length = 0.54
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_heavy_energy.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "HVY"

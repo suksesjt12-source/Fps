@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "sr8_precision"
+display_name = "SR-8 Longshot DMR"
+category = 2
+category_label = "Precision Rifle"
+fire_mode = 0
+burst_count = 1
+damage = 78.0
+fire_rate = 2.1
+magazine_size = 10
+reserve_max = 50
+reload_duration = 2.2
+spread_hip = 0.055
+spread_ads = 0.001
+recoil_pitch = 3.8
+recoil_yaw = 0.45
+ads_fov = 34.0
+ads_sensitivity_mult = 0.42
+pellets = 1
+effective_range = 200.0
+is_energy = false
+is_explosive = false
+splash_radius = 0.0
+move_speed_mult = 0.94
+accent_color = Color(0.82, 0.88, 0.94, 1)
+body_color = Color(0.22, 0.24, 0.22, 1)
+barrel_length = 0.78
+receiver_length = 0.52
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_precision.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "DMR"

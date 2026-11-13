@@ -1,0 +1,345 @@
+[gd_scene load_steps=26 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_ai.gd" id="1_ai"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_hitbox.gd" id="2_hb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.42
+height = 1.85
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_torso"]
+size = Vector3(0.62, 0.88, 0.42)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_head"]
+radius = 0.24
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_torso"]
+radius = 0.26
+height = 0.78
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.19
+height = 0.38
+
+[sub_resource type="BoxMesh" id="BoxMesh_visor"]
+size = Vector3(0.26, 0.07, 0.08)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_limb"]
+radius = 0.09
+height = 0.62
+
+[sub_resource type="BoxMesh" id="BoxMesh_gun"]
+size = Vector3(0.08, 0.1, 0.62)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muzzle"]
+shading_mode = 0
+albedo_color = Color(1, 0.72, 0.2, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_muzzle"]
+material = SubResource("StandardMaterial3D_muzzle")
+radius = 0.09
+height = 0.18
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/ProceduralBody:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.03, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/ProceduralBody/LeftLeg:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.42, 0, 0), Vector3(0, 0, 0), Vector3(-0.42, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RigRoot/ProceduralBody/RightLeg:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.42, 0, 0), Vector3(0, 0, 0), Vector3(0.42, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/ProceduralBody/LeftLeg:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.7, 0, 0), Vector3(0, 0, 0), Vector3(-0.7, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RigRoot/ProceduralBody/RightLeg:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.7, 0, 0), Vector3(0, 0, 0), Vector3(0.7, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_alert"]
+resource_name = "alert"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/ProceduralBody:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.08, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_attack"]
+resource_name = "attack"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/WeaponMesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.28, 1.18, -0.34), Vector3(0.28, 1.2, -0.26), Vector3(0.28, 1.18, -0.34)]
+}
+
+[sub_resource type="Animation" id="Animation_hit"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot/ProceduralBody:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.24, 0, -0.12), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_defeated"]
+resource_name = "defeated"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigRoot:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.55),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.52, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RigRoot:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.55),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.25, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_enemy"]
+_data = {
+"alert": SubResource("Animation_alert"),
+"attack": SubResource("Animation_attack"),
+"defeated": SubResource("Animation_defeated"),
+"hit": SubResource("Animation_hit"),
+"idle": SubResource("Animation_idle"),
+"run": SubResource("Animation_run"),
+"walk": SubResource("Animation_walk")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_idle"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_walk"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_run"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_loco"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_idle")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_walk")
+blend_point_1/pos = 0.5
+blend_point_2/node = SubResource("AnimationNodeAnimation_run")
+blend_point_2/pos = 1.0
+min_space = 0.0
+max_space = 1.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_alert"]
+animation = &"alert"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_attack"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hit"]
+animation = &"hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_defeated"]
+animation = &"defeated"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="Transition_start"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_enemy"]
+states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_loco")
+states/locomotion/position = Vector2(320, 100)
+states/alert/node = SubResource("AnimationNodeAnimation_alert")
+states/alert/position = Vector2(520, 40)
+states/attack/node = SubResource("AnimationNodeAnimation_attack")
+states/attack/position = Vector2(520, 120)
+states/hit/node = SubResource("AnimationNodeAnimation_hit")
+states/hit/position = Vector2(520, 200)
+states/defeated/node = SubResource("AnimationNodeAnimation_defeated")
+states/defeated/position = Vector2(700, 120)
+transitions = ["Start", "locomotion", SubResource("Transition_start")]
+
+[node name="EnemySoldier" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_ai")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.8
+target_desired_distance = 1.2
+avoidance_enabled = true
+
+[node name="LOSRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(0, 0, -25)
+collision_mask = 3
+
+[node name="Audio3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"
+
+[node name="TorsoHitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_hb")
+is_head = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorsoHitbox"]
+shape = SubResource("BoxShape3D_torso")
+
+[node name="HeadHitbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_hb")
+is_head = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HeadHitbox"]
+shape = SubResource("SphereShape3D_head")
+
+[node name="RigRoot" type="Node3D" parent="."]
+
+[node name="CustomGLBAnchor" type="Node3D" parent="RigRoot"]
+
+[node name="ProceduralBody" type="Node3D" parent="RigRoot"]
+
+[node name="Torso" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+mesh = SubResource("CapsuleMesh_torso")
+
+[node name="Head" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="Visor" type="MeshInstance3D" parent="RigRoot/ProceduralBody/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.17)
+mesh = SubResource("BoxMesh_visor")
+
+[node name="LeftArm" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -0.34, 1.15, -0.1)
+mesh = SubResource("CapsuleMesh_limb")
+
+[node name="RightArm" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0.34, 1.15, -0.1)
+mesh = SubResource("CapsuleMesh_limb")
+
+[node name="LeftLeg" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16, 0.42, 0)
+mesh = SubResource("CapsuleMesh_limb")
+
+[node name="RightLeg" type="MeshInstance3D" parent="RigRoot/ProceduralBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16, 0.42, 0)
+mesh = SubResource("CapsuleMesh_limb")
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="RigRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 1.18, -0.34)
+mesh = SubResource("BoxMesh_gun")
+
+[node name="MuzzleFlash" type="MeshInstance3D" parent="RigRoot/WeaponMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
+visible = false
+mesh = SubResource("SphereMesh_muzzle")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_enemy")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_enemy")
+anim_player = NodePath("../AnimationPlayer")
+parameters/locomotion/blend_position = 0.0

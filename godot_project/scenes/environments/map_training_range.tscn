@@ -1,0 +1,183 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/level_controller.gd" id="1_lvl"]
+[ext_resource type="Script" path="res://scripts/missions/training_target.gd" id="2_targ"]
+[ext_resource type="Script" path="res://scripts/missions/pickup_item.gd" id="3_pick"]
+
+[sub_resource type="Environment" id="Environment_train"]
+background_mode = 1
+background_color = Color(0.14, 0.18, 0.24, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.45, 0.52, 0.62, 1)
+ambient_light_energy = 0.85
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_train"]
+agent_radius = 0.5
+agent_height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.22, 0.25, 0.3, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_target"]
+albedo_color = Color(0.95, 0.35, 0.18, 1)
+emission_enabled = true
+emission = Color(0.85, 0.22, 0.1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_targ"]
+size = Vector3(1.0, 1.8, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_targ"]
+material = SubResource("StandardMaterial3D_target")
+size = Vector3(0.9, 1.7, 0.2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pick"]
+radius = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_pick"]
+size = Vector3(0.5, 0.35, 0.35)
+
+[node name="MapTrainingRange" type="Node3D"]
+script = ExtResource("1_lvl")
+environment_theme = "city"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_train")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 22, 0)
+light_energy = 1.25
+shadow_enabled = true
+
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 16)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_train")
+
+[node name="RangeFloor" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(44, 1, 56)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="WallBack" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -28)
+use_collision = true
+size = Vector3(44, 6, 1.5)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="CrouchObstacle" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.2, 6)
+use_collision = true
+size = Vector3(5, 1.6, 1.2)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="JumpVaultObstacle" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.55, 6)
+use_collision = true
+size = Vector3(5, 1.1, 1.0)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="TargetClose" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -4)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_targ")
+move_axis = Vector3(3.5, 0, 0)
+move_speed = 1.4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetClose"]
+shape = SubResource("BoxShape3D_targ")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TargetClose"]
+mesh = SubResource("BoxMesh_targ")
+
+[node name="TargetMid" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.9, -14)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_targ")
+move_axis = Vector3(4.5, 0, 0)
+move_speed = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetMid"]
+shape = SubResource("BoxShape3D_targ")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TargetMid"]
+mesh = SubResource("BoxMesh_targ")
+
+[node name="TargetFar" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.9, -22)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_targ")
+move_axis = Vector3(5.5, 0, 0)
+move_speed = 2.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetFar"]
+shape = SubResource("BoxShape3D_targ")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TargetFar"]
+mesh = SubResource("BoxMesh_targ")
+
+[node name="RackSMG" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.8, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_pick")
+pickup_type = 0
+weapon_id = "k9_compact"
+respawn_time = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RackSMG"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RackSMG"]
+mesh = SubResource("BoxMesh_pick")
+
+[node name="RackDMR" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.8, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_pick")
+pickup_type = 0
+weapon_id = "sr8_precision"
+respawn_time = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RackDMR"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RackDMR"]
+mesh = SubResource("BoxMesh_pick")
+
+[node name="RackShotgun" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.8, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_pick")
+pickup_type = 0
+weapon_id = "m12_shotgun"
+respawn_time = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RackShotgun"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RackShotgun"]
+mesh = SubResource("BoxMesh_pick")
+
+[node name="RackHeavy" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.8, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_pick")
+pickup_type = 0
+weapon_id = "helion_heavy"
+respawn_time = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RackHeavy"]
+shape = SubResource("SphereShape3D_pick")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RackHeavy"]
+mesh = SubResource("BoxMesh_pick")

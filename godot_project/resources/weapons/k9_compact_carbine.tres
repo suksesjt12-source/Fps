@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "k9_compact"
+display_name = "K-9 Spectre PDW"
+category = 1
+category_label = "Compact Rifle"
+fire_mode = 2
+burst_count = 3
+damage = 20.0
+fire_rate = 13.5
+magazine_size = 36
+reserve_max = 180
+reload_duration = 1.35
+spread_hip = 0.024
+spread_ads = 0.011
+recoil_pitch = 1.15
+recoil_yaw = 0.72
+ads_fov = 60.0
+ads_sensitivity_mult = 0.72
+pellets = 1
+effective_range = 75.0
+is_energy = false
+is_explosive = false
+splash_radius = 0.0
+move_speed_mult = 1.06
+accent_color = Color(0.35, 0.75, 0.95, 1)
+body_color = Color(0.15, 0.17, 0.21, 1)
+barrel_length = 0.36
+receiver_length = 0.34
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_compact.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "SMG"

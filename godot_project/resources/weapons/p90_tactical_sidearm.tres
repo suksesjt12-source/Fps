@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "p90_sidearm"
+display_name = "P-90 Talon Sidearm"
+category = 5
+category_label = "Sidearm"
+fire_mode = 0
+burst_count = 1
+damage = 24.0
+fire_rate = 6.5
+magazine_size = 15
+reserve_max = 90
+reload_duration = 1.15
+spread_hip = 0.02
+spread_ads = 0.006
+recoil_pitch = 1.4
+recoil_yaw = 0.35
+ads_fov = 64.0
+ads_sensitivity_mult = 0.78
+pellets = 1
+effective_range = 65.0
+is_energy = false
+is_explosive = false
+splash_radius = 0.0
+move_speed_mult = 1.08
+accent_color = Color(0.68, 0.74, 0.82, 1)
+body_color = Color(0.14, 0.15, 0.18, 1)
+barrel_length = 0.24
+receiver_length = 0.22
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_sidearm.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "PST"

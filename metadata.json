@@ -1,0 +1,6 @@
+{
+  "name": "TACTICAL STRIKE: ZERO HOUR — Godot 4.x Android FPS Studio",
+  "description": "Complete Godot Engine 4.x 3D Android FPS game project, interactive HUD & systems configurator, integrity auditor, and GitHub Actions APK exporter.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

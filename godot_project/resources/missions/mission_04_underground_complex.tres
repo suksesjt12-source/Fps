@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/mission_data.gd" id="1_mdata"]
+
+[resource]
+script = ExtResource("1_mdata")
+mission_id = "mission_04"
+mission_index = 3
+title = "Operation Subterra"
+location_name = "Underground Complex"
+environment_theme = "underground"
+map_scene_path = "res://scenes/environments/map_underground_complex.tscn"
+briefing = "Descend into the subterranean turbine network. Shut down the signal jamming array, navigate the emergency corridors, and neutralize the heavy armored unit."
+primary_objective_ids = PackedStringArray("obj_sub_shaft", "obj_sub_jammer", "obj_sub_heavy")
+primary_objective_labels = PackedStringArray("Breach Sub-Level Turbine Hall", "Disable Signal Jamming Array", "Neutralize Heavy Enforcer Unit")
+secondary_objective_ids = PackedStringArray("obj_sub_codes")
+secondary_objective_labels = PackedStringArray("Acquire Vault Access Module")
+reward_credits = 2200
+time_limit_sec = 0.0

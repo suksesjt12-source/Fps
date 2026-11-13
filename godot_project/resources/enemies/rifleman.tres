@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+archetype_id = "rifleman"
+display_name = "Syndicate Rifleman"
+max_health = 95.0
+move_speed = 3.1
+chase_speed = 4.6
+attack_damage = 10.0
+fire_interval = 0.42
+burst_shots = 3
+detection_range = 28.0
+hearing_range = 20.0
+attack_range = 21.0
+accuracy_spread = 0.068
+score_value = 100
+armor_color = Color(0.24, 0.27, 0.32, 1)
+visor_color = Color(0.95, 0.28, 0.22, 1)
+body_scale = 1.0
+custom_glb_path = ""

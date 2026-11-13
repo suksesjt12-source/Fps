@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/mission_data.gd" id="1_mdata"]
+
+[resource]
+script = ExtResource("1_mdata")
+mission_id = "mission_05"
+mission_index = 4
+title = "Operation Zero Hour"
+location_name = "Industrial Harbor"
+environment_theme = "harbor"
+map_scene_path = "res://scenes/environments/map_industrial_harbor.tscn"
+briefing = "Zero Hour is imminent. Fight through the storm-swept shipping yard, seize the neural transponder from Warehouse B, and defeat the Syndicate Strike Commander."
+primary_objective_ids = PackedStringArray("obj_harbor_dock", "obj_harbor_transponder", "obj_harbor_boss")
+primary_objective_labels = PackedStringArray("Secure Container Yard Alpha", "Collect Neural Transponder", "Defeat Syndicate Strike Commander")
+secondary_objective_ids = PackedStringArray("obj_harbor_crane")
+secondary_objective_labels = PackedStringArray("Sabotage Harbor Crane Relay")
+reward_credits = 3000
+time_limit_sec = 0.0

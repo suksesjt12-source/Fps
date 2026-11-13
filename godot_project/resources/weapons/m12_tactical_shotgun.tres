@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_wdata"]
+
+[resource]
+script = ExtResource("1_wdata")
+weapon_id = "m12_shotgun"
+display_name = "M-12 Breacher"
+category = 4
+category_label = "Futuristic Shotgun"
+fire_mode = 0
+burst_count = 1
+damage = 16.0
+fire_rate = 1.45
+magazine_size = 8
+reserve_max = 40
+reload_duration = 2.15
+spread_hip = 0.095
+spread_ads = 0.058
+recoil_pitch = 4.6
+recoil_yaw = 1.15
+ads_fov = 62.0
+ads_sensitivity_mult = 0.72
+pellets = 8
+effective_range = 34.0
+is_energy = false
+is_explosive = false
+splash_radius = 0.0
+move_speed_mult = 0.98
+accent_color = Color(0.92, 0.36, 0.22, 1)
+body_color = Color(0.2, 0.19, 0.19, 1)
+barrel_length = 0.52
+receiver_length = 0.42
+custom_glb_path = ""
+fire_sfx_path = "res://assets/audio/sfx/fire_shotgun.wav"
+reload_sfx_path = "res://assets/audio/sfx/weapon_reload.wav"
+equip_sfx_path = "res://assets/audio/sfx/weapon_equip.wav"
+icon_code = "SHG"

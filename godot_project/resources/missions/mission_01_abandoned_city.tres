@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/mission_data.gd" id="1_mdata"]
+
+[resource]
+script = ExtResource("1_mdata")
+mission_id = "mission_01"
+mission_index = 0
+title = "Operation Silent District"
+location_name = "Abandoned City"
+environment_theme = "city"
+map_scene_path = "res://scenes/environments/map_abandoned_city.tscn"
+briefing = "Hostile Vanguard forces have occupied Sector 4 of the Abandoned City. Breach the boulevard, recover the encrypted relay core inside the civic hall, and secure the extraction plaza."
+primary_objective_ids = PackedStringArray("obj_city_street", "obj_city_core", "obj_city_plaza")
+primary_objective_labels = PackedStringArray("Reach Forward Relay Boulevard", "Recover Encrypted Relay Core", "Secure Central Extraction Plaza")
+secondary_objective_ids = PackedStringArray("obj_city_comms")
+secondary_objective_labels = PackedStringArray("Disable Rogue Comms Terminal")
+reward_credits = 1000
+time_limit_sec = 0.0

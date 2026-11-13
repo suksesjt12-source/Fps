@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MissionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/missions/mission_data.gd" id="1_mdata"]
+
+[resource]
+script = ExtResource("1_mdata")
+mission_id = "mission_02"
+mission_index = 1
+title = "Operation Dustline"
+location_name = "Desert Facility"
+environment_theme = "desert"
+map_scene_path = "res://scenes/environments/map_desert_facility.tscn"
+briefing = "The Syndicate is refining thermal cells at an arid industrial compound. Override the twin cooling valves, collect tactical telemetry, and eliminate the garrison commander."
+primary_objective_ids = PackedStringArray("obj_desert_depot", "obj_desert_valve", "obj_desert_commander")
+primary_objective_labels = PackedStringArray("Infiltrate Solar Depot", "Activate Cooling Override Console", "Eliminate Garrison Commander")
+secondary_objective_ids = PackedStringArray("obj_desert_intel")
+secondary_objective_labels = PackedStringArray("Recover Desert Telemetry Drive")
+reward_credits = 1400
+time_limit_sec = 0.0

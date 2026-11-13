@@ -1,0 +1,303 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_set"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_set")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.07, 0.1, 1)
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 28.0
+offset_right = -40.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Header" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BtnSaveBack" type="Button" parent="Layout/Header"]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+text = "Save & Back"
+
+[node name="Title" type="Label" parent="Layout/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SETTINGS & PERFORMANCE"
+
+[node name="Tabs" type="TabContainer" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Audio" type="ScrollContainer" parent="Layout/Tabs"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Layout/Tabs/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="MasterRow" type="HBoxContainer" parent="Layout/Tabs/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Audio/VBox/MasterRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Audio/VBox/MasterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.9
+
+[node name="MusicRow" type="HBoxContainer" parent="Layout/Tabs/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Audio/VBox/MusicRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Music Volume"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Audio/VBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.65
+
+[node name="SFXRow" type="HBoxContainer" parent="Layout/Tabs/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Audio/VBox/SFXRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Audio/VBox/SFXRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.9
+
+[node name="AmbienceRow" type="HBoxContainer" parent="Layout/Tabs/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Audio/VBox/AmbienceRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Ambience Volume"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Audio/VBox/AmbienceRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.75
+
+[node name="Controls" type="ScrollContainer" parent="Layout/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Layout/Tabs/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="SensXRow" type="HBoxContainer" parent="Layout/Tabs/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Controls/VBox/SensXRow"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "Horizontal Look Sensitivity"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Controls/VBox/SensXRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.2
+max_value = 3.0
+step = 0.05
+value = 1.0
+
+[node name="SensYRow" type="HBoxContainer" parent="Layout/Tabs/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Controls/VBox/SensYRow"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "Vertical Look Sensitivity"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Controls/VBox/SensYRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.2
+max_value = 3.0
+step = 0.05
+value = 1.0
+
+[node name="ADSSensRow" type="HBoxContainer" parent="Layout/Tabs/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Controls/VBox/ADSSensRow"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "ADS Sensitivity Multiplier"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Controls/VBox/ADSSensRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.2
+max_value = 1.2
+step = 0.05
+value = 0.6
+
+[node name="InvertYCheck" type="CheckButton" parent="Layout/Tabs/Controls/VBox"]
+layout_mode = 2
+text = "Invert Vertical Look Axis"
+
+[node name="BtnCustomizeHUD" type="Button" parent="Layout/Tabs/Controls/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Customize Android Touch HUD Layout"
+
+[node name="BtnResetProgress" type="Button" parent="Layout/Tabs/Controls/VBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "Reset Campaign Progress"
+
+[node name="Graphics" type="ScrollContainer" parent="Layout/Tabs"]
+visible = false
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Layout/Tabs/Graphics"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="PresetRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/PresetRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Quality Preset"
+
+[node name="Option" type="OptionButton" parent="Layout/Tabs/Graphics/VBox/PresetRow"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+
+[node name="ScaleRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/ScaleRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Render Scale"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Graphics/VBox/ScaleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 1.0
+step = 0.05
+value = 0.85
+
+[node name="ShadowRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/ShadowRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Shadow Quality"
+
+[node name="Option" type="OptionButton" parent="Layout/Tabs/Graphics/VBox/ShadowRow"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+
+[node name="MSAARow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/MSAARow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Anti-Aliasing (MSAA)"
+
+[node name="Option" type="OptionButton" parent="Layout/Tabs/Graphics/VBox/MSAARow"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+
+[node name="EffectsRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/EffectsRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Effects Quality"
+
+[node name="Option" type="OptionButton" parent="Layout/Tabs/Graphics/VBox/EffectsRow"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+
+[node name="DistRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/DistRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "View Distance"
+
+[node name="Slider" type="HSlider" parent="Layout/Tabs/Graphics/VBox/DistRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 45.0
+max_value = 180.0
+step = 5.0
+value = 90.0
+
+[node name="FPSRow" type="HBoxContainer" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Layout/Tabs/Graphics/VBox/FPSRow"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "FPS Target"
+
+[node name="Option" type="OptionButton" parent="Layout/Tabs/Graphics/VBox/FPSRow"]
+custom_minimum_size = Vector2(200, 38)
+layout_mode = 2
+
+[node name="VSyncCheck" type="CheckButton" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+text = "Enable VSync"
+
+[node name="ShowFPSCheck" type="CheckButton" parent="Layout/Tabs/Graphics/VBox"]
+layout_mode = 2
+text = "Show FPS Counter on HUD"
+
+[node name="ResetConfirmDialog" type="ConfirmationDialog" parent="."]
+dialog_text = "Reset all campaign unlocks and Survival high scores? Settings will be preserved."

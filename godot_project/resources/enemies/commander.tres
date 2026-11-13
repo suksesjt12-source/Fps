@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+archetype_id = "commander"
+display_name = "Syndicate Commander"
+max_health = 320.0
+move_speed = 2.9
+chase_speed = 4.4
+attack_damage = 19.0
+fire_interval = 0.28
+burst_shots = 5
+detection_range = 34.0
+hearing_range = 26.0
+attack_range = 24.0
+accuracy_spread = 0.04
+score_value = 500
+armor_color = Color(0.16, 0.18, 0.24, 1)
+visor_color = Color(0.2, 0.88, 1.0, 1)
+body_scale = 1.2
+custom_glb_path = ""

@@ -1,0 +1,203 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/android/touch_controls.gd" id="1_tctrl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joy"]
+bg_color = Color(0.08, 0.11, 0.16, 0.42)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.82, 0.92, 0.48)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.09, 0.13, 0.19, 0.62)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.88, 0.92, 0.45)
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[node name="TouchControls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tctrl")
+
+[node name="JoystickArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -310.0
+offset_right = 340.0
+offset_bottom = -20.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="JoystickBase" type="Panel" parent="JoystickArea"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 60.0
+offset_right = 216.0
+offset_bottom = 228.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_joy")
+
+[node name="JoystickKnob" type="Panel" parent="JoystickArea/JoystickBase"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 54.0
+offset_right = 114.0
+offset_bottom = 114.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_btn")
+
+[node name="LookArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -740.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopRight" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 76.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="BtnPause" type="Button" parent="TopRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "PAUSE"
+
+[node name="ActionButtons" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -340.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BtnFire" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 140.0
+offset_right = 290.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "FIRE"
+
+[node name="BtnADS" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 160.0
+offset_right = 154.0
+offset_bottom = 236.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "ADS"
+
+[node name="BtnReload" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 72.0
+offset_right = 168.0
+offset_bottom = 140.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "RLD"
+
+[node name="BtnJump" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 50.0
+offset_right = 278.0
+offset_bottom = 120.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "JUMP"
+
+[node name="BtnCrouch" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 250.0
+offset_right = 178.0
+offset_bottom = 312.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "CRCH"
+
+[node name="BtnSprint" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 210.0
+offset_right = 76.0
+offset_bottom = 278.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "SPRINT"
+
+[node name="BtnSwitch" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = -24.0
+offset_right = 292.0
+offset_bottom = 36.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "SWAP"
+
+[node name="BtnInspect" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = -24.0
+offset_right = 186.0
+offset_bottom = 36.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "INSP"
+
+[node name="BtnInteract" type="Button" parent="ActionButtons"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 90.0
+offset_right = 68.0
+offset_bottom = 158.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "USE"
